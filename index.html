@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="LEXO — O jogo diário de adivinhação de palavras. Uma nova palavra todo dia. Quantas tentativas você precisa?">
+  <meta name="theme-color" content="#111111">
+  <meta property="og:title" content="LEXO — Adivinhe a Palavra">
+  <meta property="og:description" content="Um novo desafio de palavras todos os dias. Descubra a palavra secreta em até 6 tentativas!">
+  <meta property="og:type" content="website">
+  <title>LEXO — Adivinhe a Palavra</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><text y='32' font-size='32'>🎯</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+
+  <!-- ============================================================
+       Toast (notificações inline)
+  ============================================================ -->
+  <div id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- ============================================================
+       Aplicação Principal
+  ============================================================ -->
+  <div class="app-container">
+
+    <!-- HEADER -->
+    <header class="header" role="banner">
+      <div class="streak-badge" id="streak-badge" aria-label="Sequência de dias" style="display:none">
+        🔥 <span id="streak-count">0</span>
+      </div>
+
+      <div class="header-logo" aria-label="LEXO">LEXO</div>
+
+      <div class="header-actions">
+        <button class="icon-btn" id="btn-stats" aria-label="Ver estatísticas" title="Estatísticas">
+          📊
+        </button>
+        <button class="icon-btn" id="btn-help" aria-label="Como jogar" title="Ajuda">
+          ❓
+        </button>
+      </div>
+    </header>
+
+    <!-- ============================================================
+         TELA INICIAL
+    ============================================================ -->
+    <main id="screen-home" class="screen" role="main" aria-label="Tela inicial">
+
+      <div class="home-logo" aria-label="LEXO">LEXO</div>
+      <p class="home-tagline">Uma palavra por dia</p>
+
+      <!-- Card do tema -->
+      <div class="home-category-card" aria-label="Tema e tamanho da palavra de hoje">
+        <div class="home-category-label">Categoria de hoje</div>
+        <div class="home-category-value" id="home-category-value">🎭 Memes</div>
+        <div class="home-word-len" id="home-word-len">5 letras</div>
+      </div>
+
+      <!-- Regras rápidas -->
+      <div class="home-rules" aria-label="Como jogar">
+        <div class="home-rule">
+          <div class="rule-tile correct" aria-hidden="true">L</div>
+          <span>Letra correta na posição certa</span>
+        </div>
+        <div class="home-rule">
+          <div class="rule-tile present" aria-hidden="true">E</div>
+          <span>Letra existe, mas na posição errada</span>
+        </div>
+        <div class="home-rule">
+          <div class="rule-tile absent" aria-hidden="true">X</div>
+          <span>Letra não está na palavra</span>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <button class="btn-primary" id="btn-play" aria-label="Começar a jogar">
+        JOGAR AGORA
+      </button>
+
+    </main>
+
+    <!-- ============================================================
+         TELA DE JOGO
+    ============================================================ -->
+    <section id="screen-game" class="screen" role="main" aria-label="Jogo">
+
+      <!-- Meta info -->
+      <div class="game-meta" aria-live="polite">
+        <div class="game-category" id="game-category-label" aria-label="Categoria"></div>
+        <div class="game-attempt-counter" id="attempt-counter" aria-label="Tentativa atual">
+          TENTATIVA 1 DE 6
+        </div>
+      </div>
+
+      <!-- Banner de jogo concluído (clicável para ver resultado) -->
+      <div id="game-over-banner" class="game-over-banner" role="button" tabindex="0"
+           aria-label="Jogo encerrado, clique para ver o resultado">
+      </div>
+
+      <!-- Grid de letras -->
+      <div id="game-grid" class="game-grid"
+           role="grid"
+           aria-label="Grade de tentativas"
+           aria-readonly="true">
+        <!-- Gerado dinamicamente via JS -->
+      </div>
+
+      <!-- Teclado Virtual -->
+      <div id="keyboard" class="keyboard"
+           role="group"
+           aria-label="Teclado virtual">
+        <!-- Gerado dinamicamente via JS -->
+      </div>
+
+    </section>
+
+  </div><!-- /app-container -->
+
+  <!-- ============================================================
+       MODAL — RESULTADO
+  ============================================================ -->
+  <div id="modal-result" class="modal-overlay" role="dialog"
+       aria-modal="true" aria-labelledby="result-title">
+    <div class="modal-content">
+      <button class="modal-close-btn" aria-label="Fechar">✕</button>
+
+      <h2 id="result-title" class="modal-title">🏆 Parabéns!</h2>
+      <p id="result-subtitle" class="modal-subtitle">Você acertou em 3 tentativas!</p>
+
+      <hr class="divider">
+
+      <!-- Palavra revelada -->
+      <div class="result-word-reveal">
+        <div class="result-word-label">A palavra era</div>
+        <div id="result-word" class="result-word-value">SIGMA</div>
+      </div>
+
+      <!-- Grade de emojis -->
+      <pre id="result-emoji" class="result-emoji-grid" aria-label="Resultado em emojis"></pre>
+
+      <!-- Stats rápidas -->
+      <div class="result-stats-row">
+        <div class="result-stat">
+          <div class="result-stat-value" id="result-attempts">3</div>
+          <div class="result-stat-label">Tentativas</div>
+        </div>
+        <div class="result-stat">
+          <div class="result-stat-value" id="result-streak">1</div>
+          <div class="result-stat-label">Sequência</div>
+        </div>
+      </div>
+
+      <!-- Ações -->
+      <div class="modal-actions">
+        <button class="btn-primary" id="btn-share" aria-label="Compartilhar resultado">
+          ⬆ COMPARTILHAR
+        </button>
+        <button class="btn-outline" id="btn-goto-stats" aria-label="Ver estatísticas completas">
+          VER ESTATÍSTICAS
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       MODAL — ESTATÍSTICAS
+  ============================================================ -->
+  <div id="modal-stats" class="modal-overlay" role="dialog"
+       aria-modal="true" aria-labelledby="stats-title">
+    <div class="modal-content">
+      <button class="modal-close-btn" aria-label="Fechar">✕</button>
+
+      <h2 id="stats-title" class="modal-title">ESTATÍSTICAS</h2>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-card-value" id="stat-total-games">0</div>
+          <div class="stat-card-label">Partidas</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-value" id="stat-win-rate">0%</div>
+          <div class="stat-card-label">% de vitórias</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-value" id="stat-streak">0</div>
+          <div class="stat-card-label">Sequência atual</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-value" id="stat-best-streak">0</div>
+          <div class="stat-card-label">Melhor sequência</div>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <div class="distribution-title">DISTRIBUIÇÃO DE TENTATIVAS</div>
+      <div id="dist-container"></div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       MODAL — AJUDA
+  ============================================================ -->
+  <div id="modal-help" class="modal-overlay" role="dialog"
+       aria-modal="true" aria-labelledby="help-title">
+    <div class="modal-content">
+      <button class="modal-close-btn" aria-label="Fechar">✕</button>
+
+      <h2 id="help-title" class="modal-title">COMO JOGAR</h2>
+      <p class="modal-subtitle">Descubra a palavra do dia em até 6 tentativas.</p>
+
+      <hr class="divider">
+
+      <div class="help-section">
+        <div class="help-section-title">Regras</div>
+        <p class="modal-subtitle">
+          Cada tentativa deve ser uma palavra válida de 5 letras. As cores revelam como você está chegando perto:
+        </p>
+      </div>
+
+      <div class="help-section">
+        <div class="help-examples">
+
+          <div class="help-example-row">
+            <div class="help-tile correct">S</div>
+            <div class="help-tile">I</div>
+            <div class="help-tile">G</div>
+            <div class="help-tile">M</div>
+            <div class="help-tile">A</div>
+            <span class="help-example-desc">
+              <strong style="color:var(--color-gold)">S</strong> está na posição correta
+            </span>
+          </div>
+
+          <div class="help-example-row">
+            <div class="help-tile">V</div>
+            <div class="help-tile present">I</div>
+            <div class="help-tile">R</div>
+            <div class="help-tile">A</div>
+            <div class="help-tile">L</div>
+            <span class="help-example-desc">
+              <strong style="color:var(--color-present)">I</strong> existe, mas em outra posição
+            </span>
+          </div>
+
+          <div class="help-example-row">
+            <div class="help-tile">L</div>
+            <div class="help-tile">E</div>
+            <div class="help-tile">N</div>
+            <div class="help-tile absent">D</div>
+            <div class="help-tile">A</div>
+            <span class="help-example-desc">
+              <strong style="color:var(--color-absent-text)">D</strong> não está na palavra
+            </span>
+          </div>
+
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <div class="help-section">
+        <div class="help-section-title">Uma nova palavra a cada dia</div>
+        <p class="modal-subtitle">Todos os jogadores tentam a mesma palavra. Volte amanhã para um novo desafio!</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Scripts: bundle universal compatível com file:// e http:// -->
+  <script src="js/bundle.js" defer></script>
+</body>
+</html>

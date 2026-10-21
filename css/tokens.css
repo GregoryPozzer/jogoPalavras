@@ -1,0 +1,99 @@
+/* ========================================
+   LEXO — Design Tokens (CSS Custom Properties)
+   ======================================== */
+:root {
+  /* ---- Cores Base ---- */
+  --color-bg:           #111111;
+  --color-surface:      #1A1A1A;
+  --color-surface-2:    #222222;
+  --color-border:       #2A2A2A;
+  --color-border-focus: #D4A853;
+
+  /* ---- Cores de Marca ---- */
+  --color-gold:         #D4A853;
+  --color-gold-dark:    #B8902F;
+  --color-gold-dim:     rgba(212, 168, 83, 0.15);
+
+  /* ---- Cores de Texto ---- */
+  --color-text:         #FFFFFF;
+  --color-text-muted:   #888888;
+  --color-text-dim:     #555555;
+
+  /* ---- Estados das Letras ---- */
+  --color-correct:      #D4A853;   /* dourado — posição correta */
+  --color-correct-text: #000000;
+  --color-present:      #C0392B;   /* vermelho — letra existe */
+  --color-present-text: #FFFFFF;
+  --color-absent:       #2A2A2A;   /* carvão — letra ausente */
+  --color-absent-text:  #555555;
+  --color-filled:       #1A1A1A;   /* tile preenchido mas não confirmado */
+  --color-filled-text:  #FFFFFF;
+
+  /* ---- Teclas do Teclado ---- */
+  --key-bg:             #1E1E1E;
+  --key-border:         #2A2A2A;
+  --key-text:           #888888;
+  --key-enter-bg:       #D4A853;
+  --key-enter-text:     #000000;
+
+  /* ---- Tipografia ---- */
+  --font-primary:       'Space Grotesk', system-ui, sans-serif;
+  --fw-normal:          400;
+  --fw-semibold:        600;
+  --fw-bold:            700;
+  --fw-black:           900;
+
+  --fs-xs:              0.65rem;
+  --fs-sm:              0.78rem;
+  --fs-base:            1rem;
+  --fs-lg:              1.2rem;
+  --fs-xl:              1.5rem;
+  --fs-2xl:             2rem;
+  --fs-3xl:             2.5rem;
+
+  /* ---- Dimensões ---- */
+  --tile-size:          54px;
+  --tile-gap:           6px;
+  --tile-font:          1.5rem;
+
+  --key-width:          30px;
+  --key-height:         42px;
+  --key-gap:            5px;
+  --key-font:           0.78rem;
+  --key-wide:           48px;
+
+  /* ---- Layout ---- */
+  --max-width:          480px;
+  --header-height:      56px;
+  --grid-padding:       16px;
+  --modal-radius:       0px;
+
+  /* ---- Animações ---- */
+  --dur-fast:           120ms;
+  --dur-normal:         300ms;
+  --dur-slow:           500ms;
+  --ease-out:           cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-bounce:        cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* ---- Breakpoint: telas muito pequenas ---- */
+@media (max-width: 380px) {
+  :root {
+    --tile-size:   46px;
+    --tile-font:   1.25rem;
+    --key-width:   26px;
+    --key-height:  38px;
+    --key-wide:    42px;
+    --key-font:    0.68rem;
+  }
+}
+
+/* ---- Breakpoint: telas grandes ---- */
+@media (min-width: 600px) {
+  :root {
+    --tile-size:   58px;
+    --tile-font:   1.6rem;
+    --key-width:   34px;
+    --key-wide:    54px;
+  }
+}

@@ -1,0 +1,534 @@
+/* ========================================
+   LEXO — Components
+   ======================================== */
+
+/* ---- Botão Ícone (Header) ---- */
+.icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color var(--dur-fast), color var(--dur-fast);
+}
+.icon-btn:hover, .icon-btn:focus-visible {
+  border-color: var(--color-gold);
+  color: var(--color-gold);
+  outline: none;
+}
+
+/* ---- Streak Badge (Header) ---- */
+.streak-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-bold);
+  color: var(--color-gold);
+  letter-spacing: 0.06em;
+}
+
+/* ========================================
+   TELA INICIAL
+   ======================================== */
+.home-logo {
+  font-size: var(--fs-3xl);
+  font-weight: var(--fw-bold);
+  color: var(--color-gold);
+  letter-spacing: 0.2em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.home-tagline {
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+  text-align: center;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-top: -16px;
+}
+
+.home-category-card {
+  width: 100%;
+  border: 1px solid var(--color-border);
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.home-category-label {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  color: var(--color-text-dim);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.home-category-value {
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-bold);
+  color: var(--color-gold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.home-word-len {
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+  letter-spacing: 0.1em;
+}
+
+.home-rules {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.home-rule {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+}
+
+.rule-tile {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: var(--fw-bold);
+  flex-shrink: 0;
+}
+.rule-tile.correct  { background: var(--color-correct); color: var(--color-correct-text); }
+.rule-tile.present  { background: var(--color-present); color: var(--color-present-text); }
+.rule-tile.absent   { background: var(--color-absent);  color: var(--color-absent-text); }
+
+/* ---- Botão Principal ---- */
+.btn-primary {
+  width: 100%;
+  padding: 16px;
+  background: var(--color-gold);
+  color: var(--color-bg);
+  font-size: var(--fs-base);
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: background var(--dur-fast), transform var(--dur-fast);
+  border: none;
+}
+.btn-primary:hover, .btn-primary:focus-visible {
+  background: var(--color-gold-dark);
+  outline: none;
+}
+.btn-primary:active { transform: scale(0.98); }
+
+/* ---- Botão Outline ---- */
+.btn-outline {
+  width: 100%;
+  padding: 13px;
+  background: transparent;
+  color: var(--color-gold);
+  border: 1px solid var(--color-gold);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: background var(--dur-fast), color var(--dur-fast);
+}
+.btn-outline:hover, .btn-outline:focus-visible {
+  background: var(--color-gold);
+  color: var(--color-bg);
+  outline: none;
+}
+
+/* ========================================
+   TELA DE JOGO — Meta info
+   ======================================== */
+.game-meta {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.game-category {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  color: var(--color-gold);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.game-attempt-counter {
+  font-size: var(--fs-xs);
+  color: var(--color-text-dim);
+  letter-spacing: 0.15em;
+}
+
+/* ========================================
+   GRID DE LETRAS
+   ======================================== */
+.game-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tile-gap);
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.grid-row {
+  display: flex;
+  gap: var(--tile-gap);
+}
+
+.tile {
+  width: var(--tile-size);
+  height: var(--tile-size);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--tile-font);
+  font-weight: var(--fw-bold);
+  color: var(--color-text);
+  font-family: var(--font-primary);
+  letter-spacing: 0.05em;
+  user-select: none;
+  position: relative;
+  overflow: hidden;
+  /* Transição do estado */
+  transition: border-color var(--dur-fast);
+}
+
+/* Estado: tem letra digitada (mas não enviada) */
+.tile.filled {
+  border-color: var(--color-text-dim);
+  background: var(--color-bg);
+  animation: tilePop var(--dur-fast) var(--ease-bounce);
+}
+
+/* Estados revelados (após confirmar) */
+.tile.correct {
+  background: var(--color-correct);
+  border-color: var(--color-correct);
+  color: var(--color-correct-text);
+}
+
+.tile.present {
+  background: var(--color-present);
+  border-color: var(--color-present);
+  color: var(--color-present-text);
+}
+
+.tile.absent {
+  background: var(--color-absent);
+  border-color: var(--color-absent);
+  color: var(--color-absent-text);
+}
+
+/* Linha sendo editada — cursor no tile atual */
+.tile.cursor {
+  border-color: var(--color-text-muted);
+}
+
+/* ========================================
+   TECLADO VIRTUAL
+   ======================================== */
+.keyboard {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--key-gap);
+}
+
+.kb-row {
+  display: flex;
+  justify-content: center;
+  gap: var(--key-gap);
+}
+
+.key {
+  width: var(--key-width);
+  height: var(--key-height);
+  background: var(--key-bg);
+  border: 1px solid var(--key-border);
+  color: var(--key-text);
+  font-size: var(--key-font);
+  font-weight: var(--fw-bold);
+  font-family: var(--font-primary);
+  letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--dur-fast), color var(--dur-fast), border-color var(--dur-fast);
+  flex-shrink: 0;
+  text-transform: uppercase;
+}
+
+.key:hover, .key:focus-visible {
+  border-color: var(--color-gold);
+  color: var(--color-gold);
+  outline: none;
+}
+.key:active { transform: scale(0.95); }
+
+.key.wide { width: var(--key-wide); }
+.key.enter {
+  background: var(--key-enter-bg);
+  border-color: var(--key-enter-bg);
+  color: var(--key-enter-text);
+  font-weight: var(--fw-bold);
+}
+.key.enter:hover { background: var(--color-gold-dark); border-color: var(--color-gold-dark); }
+
+/* Estados das teclas após revelar */
+.key.correct {
+  background: var(--color-correct);
+  border-color: var(--color-correct);
+  color: var(--color-correct-text);
+}
+.key.present {
+  background: var(--color-present);
+  border-color: var(--color-present);
+  color: var(--color-present-text);
+}
+.key.absent {
+  background: var(--color-absent);
+  border-color: var(--color-absent);
+  color: var(--color-absent-text);
+}
+
+/* ========================================
+   MODAL — RESULTADO
+   ======================================== */
+.modal-title {
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-bold);
+  color: var(--color-gold);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.modal-subtitle {
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+  letter-spacing: 0.08em;
+}
+
+.result-word-reveal {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.result-word-label {
+  font-size: var(--fs-xs);
+  color: var(--color-text-dim);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.result-word-value {
+  font-size: var(--fs-2xl);
+  font-weight: var(--fw-bold);
+  color: var(--color-gold);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.result-emoji-grid {
+  font-size: 1.4rem;
+  line-height: 1.4;
+  letter-spacing: 2px;
+  font-family: monospace;
+  color: var(--color-text-muted);
+  background: var(--color-surface-2);
+  padding: 12px 16px;
+  border-left: 2px solid var(--color-gold);
+  white-space: pre; /* BUG-03: preservar quebras de linha dos emojis */
+}
+
+.result-stats-row {
+  display: flex;
+  gap: 24px;
+}
+
+.result-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.result-stat-value {
+  font-size: var(--fs-2xl);
+  font-weight: var(--fw-bold);
+  color: var(--color-text);
+  line-height: 1;
+}
+.result-stat-label {
+  font-size: var(--fs-xs);
+  color: var(--color-text-dim);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.modal-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+/* ========================================
+   MODAL — ESTATÍSTICAS
+   ======================================== */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.stat-card {
+  background: var(--color-surface-2);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.stat-card-value {
+  font-size: var(--fs-2xl);
+  font-weight: var(--fw-bold);
+  color: var(--color-gold);
+  line-height: 1;
+}
+.stat-card-label {
+  font-size: var(--fs-xs);
+  color: var(--color-text-muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.distribution-title {
+  font-size: var(--fs-xs);
+  color: var(--color-text-dim);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.distribution-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--fs-sm);
+}
+
+.dist-label {
+  width: 12px;
+  color: var(--color-text-muted);
+  font-weight: var(--fw-bold);
+  flex-shrink: 0;
+}
+
+.dist-bar {
+  height: 22px;
+  background: var(--color-border);
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  transition: width 0.5s var(--ease-out);
+  min-width: 24px;
+}
+
+.dist-bar.highlight { background: var(--color-gold); color: #000; }
+.dist-bar span { font-size: var(--fs-xs); font-weight: var(--fw-bold); color: var(--color-text); }
+.dist-bar.highlight span { color: #000; }
+
+/* ========================================
+   MODAL — AJUDA
+   ======================================== */
+.help-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.help-section-title {
+  font-size: var(--fs-xs);
+  color: var(--color-text-dim);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.help-examples {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.help-example-row {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+.help-tile {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--fw-bold);
+  font-size: 0.85rem;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-dim);
+  background: var(--color-surface-2);
+}
+.help-tile.correct { background: var(--color-correct); border-color: var(--color-correct); color: var(--color-correct-text); }
+.help-tile.present { background: var(--color-present); border-color: var(--color-present); color: var(--color-present-text); }
+.help-tile.absent  { background: var(--color-absent);  border-color: var(--color-absent);  color: var(--color-absent-text); }
+.help-example-desc { font-size: var(--fs-sm); color: var(--color-text-muted); margin-left: 8px; }
+
+/* ---- Divisor ---- */
+.divider {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin: 4px 0;
+}
+
+/* ---- Fechar Modal ---- */
+.modal-close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-size: 1.3rem;
+  color: var(--color-text-dim);
+  background: none;
+  border: none;
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px;
+}
+.modal-close-btn:hover { color: var(--color-text); }
+
+/* ---- Partida concluída — overlay no jogo ---- */
+.game-over-banner {
+  display: none;
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--color-gold-dim);
+  border: 1px solid var(--color-gold);
+  text-align: center;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--color-gold);
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: background var(--dur-fast);
+}
+.game-over-banner.show { display: block; }
+.game-over-banner:hover { background: rgba(212,168,83,0.25); }

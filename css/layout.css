@@ -1,0 +1,139 @@
+/* ========================================
+   LEXO — Layout
+   ======================================== */
+
+/* ----- Página ----- */
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
+
+/* ----- Container Centralizado ----- */
+.app-container {
+  width: 100%;
+  max-width: var(--max-width);
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  position: relative;
+}
+
+/* ----- Header ----- */
+.header {
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  background: var(--color-bg);
+  z-index: 10;
+}
+
+.header-logo {
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-bold);
+  color: var(--color-gold);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-family: var(--font-primary);
+}
+
+.header-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* ----- Telas ----- */
+.screen {
+  flex: 1;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 24px 16px;
+  gap: 20px;
+  animation: fadeIn var(--dur-normal) var(--ease-out);
+}
+
+.screen.active {
+  display: flex;
+}
+
+/* ----- Tela de Jogo ----- */
+#screen-game {
+  justify-content: space-between;
+  padding: 16px 16px 12px;
+  gap: 12px;
+}
+
+/* ----- Tela Inicial ----- */
+#screen-home {
+  justify-content: center;
+  gap: 32px;
+}
+
+/* ----- Overlay de Modal ----- */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 100;
+  align-items: flex-end;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+}
+
+.modal-overlay.active {
+  display: flex;
+  animation: fadeIn var(--dur-normal) var(--ease-out);
+}
+
+.modal-content {
+  width: 100%;
+  max-width: var(--max-width);
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  padding: 28px 24px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  animation: slideUp var(--dur-normal) var(--ease-out);
+  max-height: 90dvh;
+  overflow-y: auto;
+}
+
+/* ----- Toast ----- */
+#toast {
+  position: fixed;
+  top: 72px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-8px);
+  background: var(--color-text);
+  color: var(--color-bg);
+  padding: 10px 20px;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  z-index: 200;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-fast), transform var(--dur-fast);
+  white-space: nowrap;
+}
+
+#toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}

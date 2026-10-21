@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Protótipos — Palavrinha</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Outfit:wght@400;700;900&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gap: 20px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0a0a0f;
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    padding: 24px 16px;
+    color: #fff;
+  }
+
+  .page-title {
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #888;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .page-subtitle {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 900;
+    color: #fff;
+    margin-bottom: 40px;
+    font-family: 'Outfit', sans-serif;
+  }
+
+  .tabs {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+  }
+  .tab-btn {
+    padding: 10px 24px;
+    border-radius: 100px;
+    border: 2px solid #333;
+    background: transparent;
+    color: #888;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+  .tab-btn.active {
+    background: #fff;
+    border-color: #fff;
+    color: #000;
+  }
+  .tab-btn:hover:not(.active) {
+    border-color: #666;
+    color: #ccc;
+  }
+
+  .prototype-container {
+    display: none;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .prototype-container.active { display: flex; }
+
+  /* ==================== PHONE FRAME ==================== */
+  .phone-frame {
+    width: 360px;
+    min-height: 700px;
+    border-radius: 40px;
+    border: 10px solid #1a1a2e;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+    flex-shrink: 0;
+  }
+  .phone-inner {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ==================== PROTOTYPE 1 — NEON MEME ==================== */
+  .p1 .phone-frame { border-color: #1a0a2e; }
+  .p1-inner {
+    background: #0D0D1A;
+    min-height: 700px;
+    padding: 20px 16px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .p1-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .p1-streak {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(139,92,246,0.15);
+    border: 1px solid rgba(139,92,246,0.4);
+    border-radius: 100px;
+    padding: 6px 14px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #a78bfa;
+  }
+  .p1-icons { display: flex; gap: 8px; }
+  .p1-icon-btn {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 1rem;
+  }
+
+  .p1-title {
+    text-align: center;
+    font-family: 'Outfit', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, #a78bfa, #22d3ee);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -1px;
+  }
+
+  .p1-category {
+    display: flex;
+    justify-content: center;
+  }
+  .p1-category-badge {
+    background: rgba(139,92,246,0.15);
+    border: 1px solid rgba(139,92,246,0.5);
+    border-radius: 100px;
+    padding: 8px 20px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #c4b5fd;
+    box-shadow: 0 0 20px rgba(139,92,246,0.2);
+  }
+
+  .p1-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: center;
+    margin: 4px 0;
+  }
+  .p1-row {
+    display: flex;
+    gap: 6px;
+  }
+  .p1-tile {
+    width: 54px; height: 54px;
+    border-radius: 10px;
+    border: 2px solid rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #fff;
+    background: rgba(255,255,255,0.04);
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .p1-tile.correct {
+    background: linear-gradient(135deg, #10b981, #059669);
+    border-color: #10b981;
+    box-shadow: 0 0 16px rgba(16,185,129,0.5);
+  }
+  .p1-tile.present {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    border-color: #f59e0b;
+    box-shadow: 0 0 16px rgba(245,158,11,0.4);
+  }
+  .p1-tile.absent {
+    background: rgba(107,114,128,0.3);
+    border-color: rgba(107,114,128,0.3);
+    color: #6b7280;
+  }
+  .p1-tile.current {
+    border-color: rgba(139,92,246,0.6);
+    box-shadow: 0 0 12px rgba(139,92,246,0.3);
+  }
+
+  .p1-keyboard {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: auto;
+    padding-top: 8px;
+  }
+  .p1-kb-row {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+  }
+  .p1-key {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px;
+    width: 30px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #e5e7eb;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'Inter', sans-serif;
+  }
+  .p1-key.wide { width: 46px; font-size: 0.65rem; }
+  .p1-key.enter {
+    background: linear-gradient(135deg, #7c3aed, #6d28d9);
+    border-color: #7c3aed;
+    color: #fff;
+  }
+  .p1-key:hover {
+    background: rgba(139,92,246,0.25);
+    border-color: rgba(139,92,246,0.5);
+  }
+
+  /* ==================== PROTOTYPE 2 — CUTE & PLAYFUL ==================== */
+  .p2-inner {
+    background: linear-gradient(160deg, #fdf2f8 0%, #ede9fe 50%, #dbeafe 100%);
+    min-height: 700px;
+    padding: 20px 16px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .p2-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+  }
+  .p2-streak {
+    background: linear-gradient(135deg, #ff9a9e, #fecfef);
+    border-radius: 100px;
+    padding: 7px 14px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: #be185d;
+    box-shadow: 0 4px 12px rgba(254,207,239,0.5);
+  }
+  .p2-title {
+    text-align: center;
+    font-family: 'Outfit', sans-serif;
+    font-size: 2.4rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, #ec4899, #8b5cf6, #3b82f6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -1px;
+  }
+  .p2-mascot {
+    text-align: center;
+    font-size: 2rem;
+    margin: -4px 0 0;
+  }
+  .p2-progress {
+    background: rgba(139,92,246,0.1);
+    border-radius: 100px;
+    height: 8px;
+    overflow: hidden;
+    margin: 4px 0;
+  }
+  .p2-progress-fill {
+    height: 100%;
+    width: 33%;
+    background: linear-gradient(90deg, #ec4899, #8b5cf6);
+    border-radius: 100px;
+    transition: width 0.5s;
+  }
+  .p2-progress-label {
+    text-align: center;
+    font-size: 0.7rem;
+    color: #7c3aed;
+    font-weight: 700;
+  }
+  .p2-category-badge {
+    display: flex;
+    justify-content: center;
+  }
+  .p2-cat {
+    background: linear-gradient(135deg, #fce7f3, #ede9fe);
+    border: 2px solid #f9a8d4;
+    border-radius: 100px;
+    padding: 8px 20px;
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: #9333ea;
+  }
+  .p2-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: center;
+  }
+  .p2-row { display: flex; gap: 6px; }
+  .p2-tile {
+    width: 52px; height: 52px;
+    border-radius: 14px;
+    border: 3px solid #e9d5ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 900;
+    background: #fff;
+    color: #4c1d95;
+    transition: all 0.3s;
+    box-shadow: 0 4px 8px rgba(139,92,246,0.08);
+  }
+  .p2-tile.correct {
+    background: linear-gradient(135deg, #86efac, #4ade80);
+    border-color: #22c55e;
+    color: #14532d;
+    box-shadow: 0 6px 16px rgba(34,197,94,0.3);
+    transform: scale(1.05);
+  }
+  .p2-tile.present {
+    background: linear-gradient(135deg, #fde68a, #fbbf24);
+    border-color: #f59e0b;
+    color: #78350f;
+    box-shadow: 0 6px 16px rgba(251,191,36,0.3);
+    transform: scale(1.02);
+  }
+  .p2-tile.absent {
+    background: #e5e7eb;
+    border-color: #d1d5db;
+    color: #9ca3af;
+  }
+  .p2-tile.empty {
+    border-style: dashed;
+    border-color: #c4b5fd;
+  }
+
+  .p2-keyboard {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: auto;
+  }
+  .p2-kb-row { display: flex; justify-content: center; gap: 5px; }
+  .p2-key {
+    background: #fff;
+    border: 2px solid #e9d5ff;
+    border-radius: 10px;
+    width: 29px; height: 42px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: #7c3aed;
+    cursor: pointer;
+    box-shadow: 0 3px 6px rgba(139,92,246,0.1);
+    transition: all 0.15s;
+    font-family: 'Outfit', sans-serif;
+  }
+  .p2-key.wide { width: 46px; font-size: 0.65rem; }
+  .p2-key.enter {
+    background: linear-gradient(135deg, #ec4899, #8b5cf6);
+    border-color: transparent;
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(236,72,153,0.4);
+  }
+  .p2-key:hover { transform: scale(1.1); }
+
+  /* ==================== PROTOTYPE 3 — MINIMAL DARK PREMIUM ==================== */
+  .p3-inner {
+    background: #111111;
+    min-height: 700px;
+    padding: 24px 16px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .p3-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    padding-bottom: 16px;
+  }
+  .p3-logo {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #d4a853;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .p3-streak {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #d4a853;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  .p3-category {
+    text-align: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #d4a853;
+    opacity: 0.8;
+  }
+
+  .p3-counter {
+    text-align: center;
+    font-size: 0.75rem;
+    color: #555;
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: 0.1em;
+  }
+
+  .p3-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+  }
+  .p3-row { display: flex; gap: 8px; }
+  .p3-tile {
+    width: 52px; height: 52px;
+    border: 1px solid #2a2a2a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #fff;
+    background: #1a1a1a;
+    transition: all 0.3s;
+  }
+  .p3-tile.correct {
+    background: #d4a853;
+    border-color: #d4a853;
+    color: #000;
+  }
+  .p3-tile.present {
+    background: #c0392b;
+    border-color: #c0392b;
+    color: #fff;
+  }
+  .p3-tile.absent {
+    background: #2a2a2a;
+    border-color: #2a2a2a;
+    color: #555;
+  }
+  .p3-tile.current { border-color: #d4a853; }
+
+  .p3-keyboard {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: auto;
+    padding-top: 8px;
+  }
+  .p3-kb-row { display: flex; justify-content: center; gap: 5px; }
+  .p3-key {
+    background: #1e1e1e;
+    border: 1px solid #2a2a2a;
+    width: 29px; height: 40px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #888;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: 0.05em;
+  }
+  .p3-key.wide { width: 46px; font-size: 0.6rem; }
+  .p3-key.enter {
+    background: #d4a853;
+    border-color: #d4a853;
+    color: #000;
+    font-weight: 700;
+  }
+  .p3-key:hover:not(.enter) {
+    background: #2a2a2a;
+    border-color: #d4a853;
+    color: #d4a853;
+  }
+  .p3-share {
+    background: transparent;
+    border: 1px solid #d4a853;
+    color: #d4a853;
+    padding: 12px;
+    text-align: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 8px;
+  }
+  .p3-share:hover { background: #d4a853; color: #000; }
+
+  /* ==================== DESCRIPTIONS ==================== */
+  .desc-card {
+    width: 360px;
+    flex-shrink: 0;
+  }
+  .desc-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 800;
+    margin-bottom: 12px;
+  }
+  .desc-tag {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+  .desc-body {
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: #999;
+  }
+  .desc-body strong { color: #fff; }
+  .desc-body ul { padding-left: 16px; margin-top: 8px; }
+  .desc-body li { margin-bottom: 6px; }
+
+  .p1 .desc-title { color: #a78bfa; }
+  .p1 .desc-tag { background: rgba(139,92,246,0.15); color: #a78bfa; }
+  .p2 .desc-title { color: #ec4899; }
+  .p2 .desc-tag { background: rgba(236,72,153,0.15); color: #ec4899; }
+  .p3 .desc-title { color: #d4a853; }
+  .p3 .desc-tag { background: rgba(212,168,83,0.15); color: #d4a853; }
+
+  @media (max-width: 800px) {
+    .prototype-container { flex-direction: column; align-items: center; }
+    .desc-card { width: 340px; }
+  }
+</style>
+</head>
+<body>
+
+<div style="background: linear-gradient(90deg, #d4a853, #f59e0b); color: #000; padding: 14px 20px; border-radius: 12px; margin: 0 auto 30px auto; max-width: 840px; text-align: center; font-weight: 700; box-shadow: 0 4px 20px rgba(212,168,83,0.3); font-size: 0.95rem; line-height: 1.6;">
+  🎯 <span>Você está visualizando os <strong>mockups conceituais</strong> da fase de design. Para jogar a versão interativa completa do <strong>LEXO</strong>:</span>
+  <a href="index.html" style="color: #000; text-decoration: none; background: #fff; padding: 6px 14px; border-radius: 8px; margin-left: 8px; display: inline-block; font-weight: 800; border: 1px solid rgba(0,0,0,0.15);">JOGAR LEXO AGORA ➔</a>
+</div>
+
+<p class="page-title">Painel de Protótipos — UX · Acessibilidade · Visual</p>
+<h1 class="page-subtitle">🎮 Palavrinha — 3 Propostas de Interface</h1>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab(1)">✦ Neon Meme Vibes</button>
+  <button class="tab-btn" onclick="showTab(2)">✦ Cute & Playful</button>
+  <button class="tab-btn" onclick="showTab(3)">✦ Minimal Premium</button>
+</div>
+
+<!-- ====== PROTOTYPE 1 ====== -->
+<div class="prototype-container p1 active" id="tab1">
+  <div class="phone-frame">
+    <div class="p1-inner">
+      <div class="p1-header">
+        <div class="p1-streak">🔥 3 dias</div>
+        <div class="p1-icons">
+          <div class="p1-icon-btn">📊</div>
+          <div class="p1-icon-btn">❓</div>
+        </div>
+      </div>
+
+      <div class="p1-title">PALAVRINHA</div>
+
+      <div class="p1-category">
+        <div class="p1-category-badge">🎭 MEMES DO DIA</div>
+      </div>
+
+      <div class="p1-grid">
+        <div class="p1-row">
+          <div class="p1-tile correct">S</div>
+          <div class="p1-tile correct">K</div>
+          <div class="p1-tile correct">I</div>
+          <div class="p1-tile present">B</div>
+          <div class="p1-tile absent">I</div>
+        </div>
+        <div class="p1-row">
+          <div class="p1-tile correct">S</div>
+          <div class="p1-tile correct">K</div>
+          <div class="p1-tile correct">I</div>
+          <div class="p1-tile correct">B</div>
+          <div class="p1-tile correct">I</div>
+        </div>
+        <div class="p1-row">
+          <div class="p1-tile current"></div>
+          <div class="p1-tile"></div>
+          <div class="p1-tile"></div>
+          <div class="p1-tile"></div>
+          <div class="p1-tile"></div>
+        </div>
+        <div class="p1-row">
+          <div class="p1-tile"></div><div class="p1-tile"></div><div class="p1-tile"></div><div class="p1-tile"></div><div class="p1-tile"></div>
+        </div>
+        <div class="p1-row">
+          <div class="p1-tile"></div><div class="p1-tile"></div><div class="p1-tile"></div><div class="p1-tile"></div><div class="p1-tile"></div>
+        </div>
+        <div class="p1-row">
+          <div class="p1-tile"></div><div class="p1-tile"></div><div class="p1-tile"></div><div class="p1-tile"></div><div class="p1-tile"></div>
+        </div>
+      </div>
+
+      <div class="p1-keyboard">
+        <div class="p1-kb-row">
+          <div class="p1-key">Q</div><div class="p1-key">W</div><div class="p1-key">E</div><div class="p1-key">R</div><div class="p1-key">T</div><div class="p1-key">Y</div><div class="p1-key">U</div><div class="p1-key">I</div><div class="p1-key">O</div><div class="p1-key">P</div>
+        </div>
+        <div class="p1-kb-row">
+          <div class="p1-key">A</div><div class="p1-key">S</div><div class="p1-key">D</div><div class="p1-key">F</div><div class="p1-key">G</div><div class="p1-key">H</div><div class="p1-key">J</div><div class="p1-key">K</div><div class="p1-key">L</div>
+        </div>
+        <div class="p1-kb-row">
+          <div class="p1-key enter wide">↵ OK</div>
+          <div class="p1-key">Z</div><div class="p1-key">X</div><div class="p1-key">C</div><div class="p1-key">V</div><div class="p1-key">B</div><div class="p1-key">N</div><div class="p1-key">M</div>
+          <div class="p1-key wide">⌫</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="desc-card">
+    <div class="desc-title">Neon Meme Vibes</div>
+    <div class="desc-tag">🎨 Gen Z · Dark Mode · Glassmorphism</div>
+    <div class="desc-body">
+      <strong>Proposta Visual</strong>
+      <p>Estética neon escura com acentos em roxo/ciano, voltada para o público GenZ que vive no TikTok e nos memes. O tema "memes do dia" é exibido com destaque máximo.</p>
+      <ul>
+        <li><strong>Cores:</strong> Fundo #0D0D1A, neon roxo #8B5CF6, ciano #22D3EE</li>
+        <li><strong>Tipografia:</strong> Outfit 900 — impacto e energia</li>
+        <li><strong>Tiles:</strong> Glow neon em verde/amarelo com sombras coloridas</li>
+        <li><strong>Teclado:</strong> Teclas escuras com borda sutil, ENTER em roxo vibrante</li>
+        <li><strong>Streak:</strong> Badge pill com borda neon roxa</li>
+      </ul>
+      <strong style="display:block;margin-top:12px">Feedback de Acessibilidade</strong>
+      <ul>
+        <li>Contraste alto entre tiles e fundo</li>
+        <li>Cores distintas o suficiente sem depender só de matiz</li>
+        <li>Texto legível a 16px mínimo nas teclas</li>
+        <li>Botão ENTER com área grande (46×40px)</li>
+      </ul>
+      <strong style="display:block;margin-top:12px">Avaliação UX</strong>
+      <ul>
+        <li>Hierarquia clara: título → tema → grid → teclado</li>
+        <li>Onboarding zero — mecânica familiar</li>
+        <li>Alta energia visual reflete o tema memes</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ====== PROTOTYPE 2 ====== -->
+<div class="prototype-container p2" id="tab2">
+  <div class="phone-frame">
+    <div class="p2-inner">
+      <div class="p2-header">
+        <div class="p2-streak">🌟 3 dias seguidos!</div>
+        <div style="font-size:1.5rem">🏆</div>
+      </div>
+
+      <div class="p2-title">ADIVINHE!</div>
+      <div class="p2-mascot">🎭✨</div>
+
+      <div class="p2-progress">
+        <div class="p2-progress-fill"></div>
+      </div>
+      <div class="p2-progress-label">Tentativa 2 de 6</div>
+
+      <div class="p2-category-badge">
+        <div class="p2-cat">🎭 Memes do dia</div>
+      </div>
+
+      <div class="p2-grid">
+        <div class="p2-row">
+          <div class="p2-tile correct">S</div>
+          <div class="p2-tile present">K</div>
+          <div class="p2-tile absent">I</div>
+          <div class="p2-tile present">B</div>
+          <div class="p2-tile absent">A</div>
+        </div>
+        <div class="p2-row">
+          <div class="p2-tile current">S</div>
+          <div class="p2-tile"></div>
+          <div class="p2-tile empty"></div>
+          <div class="p2-tile empty"></div>
+          <div class="p2-tile empty"></div>
+        </div>
+        <div class="p2-row">
+          <div class="p2-tile empty"></div><div class="p2-tile empty"></div><div class="p2-tile empty"></div><div class="p2-tile empty"></div><div class="p2-tile empty"></div>
+        </div>
+        <div class="p2-row">
+          <div class="p2-tile empty"></div><div class="p2-tile empty"></div><div class="p2-tile empty"></div><div class="p2-tile empty"></div><div class="p2-tile empty"></div>
+        </div>
+        <div class="p2-row">
+          <div class="p2-tile empty"></div><div class="p2-tile empty"></div><div class="p2-tile empty"></div><div class="p2-tile empty"></div><div class="p2-tile empty"></div>
+        </div>
+        <div class="p2-row">
+          <div class="p2-tile empty"></div><div class="p2-tile empty"></div><div class="p2-tile empty"></div><div class="p2-tile empty"></div><div class="p2-tile empty"></div>
+        </div>
+      </div>
+
+      <div class="p2-keyboard">
+        <div class="p2-kb-row">
+          <div class="p2-key">Q</div><div class="p2-key">W</div><div class="p2-key">E</div><div class="p2-key">R</div><div class="p2-key">T</div><div class="p2-key">Y</div><div class="p2-key">U</div><div class="p2-key">I</div><div class="p2-key">O</div><div class="p2-key">P</div>
+        </div>
+        <div class="p2-kb-row">
+          <div class="p2-key">A</div><div class="p2-key">S</div><div class="p2-key">D</div><div class="p2-key">F</div><div class="p2-key">G</div><div class="p2-key">H</div><div class="p2-key">J</div><div class="p2-key">K</div><div class="p2-key">L</div>
+        </div>
+        <div class="p2-kb-row">
+          <div class="p2-key enter wide">✓ OK</div>
+          <div class="p2-key">Z</div><div class="p2-key">X</div><div class="p2-key">C</div><div class="p2-key">V</div><div class="p2-key">B</div><div class="p2-key">N</div><div class="p2-key">M</div>
+          <div class="p2-key wide">⌫</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="desc-card">
+    <div class="desc-title">Cute & Playful</div>
+    <div class="desc-tag">🌸 Infantil · Pastel · Kawaii</div>
+    <div class="desc-body">
+      <strong>Proposta Visual</strong>
+      <p>Design acolhedor e vibrante em tons pastel, pensado para crianças e jovens de 8 a 14 anos. Foco em diversão, conforto visual e onboarding emocional através do mascote.</p>
+      <ul>
+        <li><strong>Cores:</strong> Lavanda, rosa pastel, verde menta e amarelo suave</li>
+        <li><strong>Tipografia:</strong> Outfit 900 em arco-íris — alegre e jovial</li>
+        <li><strong>Tiles:</strong> Borda arredondada, efeito de crescimento no acerto</li>
+        <li><strong>Barra de progresso:</strong> Feedback visual imediato das tentativas</li>
+        <li><strong>Mascote:</strong> Elemento emocional que aumenta engajamento</li>
+      </ul>
+      <strong style="display:block;margin-top:12px">Feedback de Acessibilidade</strong>
+      <ul>
+        <li>Maior contraste de borda nos tiles vazios (dashed)</li>
+        <li>Tiles 52×52px — toque fácil para dedos pequenos</li>
+        <li>Barra de progresso como alternativa textual visual</li>
+        <li>Cores saturadas garantem distinção mesmo com baixa acuidade</li>
+      </ul>
+      <strong style="display:block;margin-top:12px">Avaliação UX</strong>
+      <ul>
+        <li>Mascote reduz ansiedade e cria afinidade emocional</li>
+        <li>Barra de progresso clarifica a mecânica das tentativas</li>
+        <li>Design não-intimidador para jogadores iniciantes</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ====== PROTOTYPE 3 ====== -->
+<div class="prototype-container p3" id="tab3">
+  <div class="phone-frame">
+    <div class="p3-inner">
+      <div class="p3-header">
+        <div class="p3-logo">LEXO</div>
+        <div class="p3-streak">🔥 3</div>
+      </div>
+
+      <div class="p3-category">CATEGORIA: MEMES</div>
+      <div class="p3-counter">TENTATIVA 2 DE 6</div>
+
+      <div class="p3-grid">
+        <div class="p3-row">
+          <div class="p3-tile correct">S</div>
+          <div class="p3-tile correct">K</div>
+          <div class="p3-tile present">I</div>
+          <div class="p3-tile absent">B</div>
+          <div class="p3-tile absent">A</div>
+        </div>
+        <div class="p3-row">
+          <div class="p3-tile current">S</div>
+          <div class="p3-tile"></div>
+          <div class="p3-tile"></div>
+          <div class="p3-tile"></div>
+          <div class="p3-tile"></div>
+        </div>
+        <div class="p3-row">
+          <div class="p3-tile"></div><div class="p3-tile"></div><div class="p3-tile"></div><div class="p3-tile"></div><div class="p3-tile"></div>
+        </div>
+        <div class="p3-row">
+          <div class="p3-tile"></div><div class="p3-tile"></div><div class="p3-tile"></div><div class="p3-tile"></div><div class="p3-tile"></div>
+        </div>
+        <div class="p3-row">
+          <div class="p3-tile"></div><div class="p3-tile"></div><div class="p3-tile"></div><div class="p3-tile"></div><div class="p3-tile"></div>
+        </div>
+        <div class="p3-row">
+          <div class="p3-tile"></div><div class="p3-tile"></div><div class="p3-tile"></div><div class="p3-tile"></div><div class="p3-tile"></div>
+        </div>
+      </div>
+
+      <div class="p3-keyboard">
+        <div class="p3-kb-row">
+          <div class="p3-key">Q</div><div class="p3-key">W</div><div class="p3-key">E</div><div class="p3-key">R</div><div class="p3-key">T</div><div class="p3-key">Y</div><div class="p3-key">U</div><div class="p3-key">I</div><div class="p3-key">O</div><div class="p3-key">P</div>
+        </div>
+        <div class="p3-kb-row">
+          <div class="p3-key">A</div><div class="p3-key">S</div><div class="p3-key">D</div><div class="p3-key">F</div><div class="p3-key">G</div><div class="p3-key">H</div><div class="p3-key">J</div><div class="p3-key">K</div><div class="p3-key">L</div>
+        </div>
+        <div class="p3-kb-row">
+          <div class="p3-key enter wide">ENTER</div>
+          <div class="p3-key">Z</div><div class="p3-key">X</div><div class="p3-key">C</div><div class="p3-key">V</div><div class="p3-key">B</div><div class="p3-key">N</div><div class="p3-key">M</div>
+          <div class="p3-key wide">DEL</div>
+        </div>
+      </div>
+
+      <div class="p3-share">⬆ Compartilhar Resultado</div>
+    </div>
+  </div>
+
+  <div class="desc-card">
+    <div class="desc-title">Minimal Premium</div>
+    <div class="desc-tag">✦ Editorial · Dark Gold · Sofisticado</div>
+    <div class="desc-body">
+      <strong>Proposta Visual</strong>
+      <p>Design editorial minimalista com fundo carvão e acento dourado-âmbar. Inspira-se em aplicativos premium como Wordle NYT e Letterboxd. Público: teens mais velhos e jovens adultos.</p>
+      <ul>
+        <li><strong>Cores:</strong> Preto #111, carvão #1A1A1A, ouro #D4A853, vermelho #C0392B</li>
+        <li><strong>Tipografia:</strong> Space Grotesk — técnico, editorial, memorável</li>
+        <li><strong>Tiles:</strong> Quadrados nítidos sem border-radius — sensação tática</li>
+        <li><strong>Teclado:</strong> Ultra-limpo, hover com borda dourada</li>
+        <li><strong>Share:</strong> Botão outline com fill hover — elegante</li>
+      </ul>
+      <strong style="display:block;margin-top:12px">Feedback de Acessibilidade</strong>
+      <ul>
+        <li>Contraste ouro/preto: ratio 7:1 — excelente (WCAG AAA)</li>
+        <li>Tiles grandes e espaçados para baixa destreza motora</li>
+        <li>Uppercase + letter-spacing para fácil leitura</li>
+        <li>Linhas finas não prejudicam — texto tem alto contraste</li>
+      </ul>
+      <strong style="display:block;margin-top:12px">Avaliação UX</strong>
+      <ul>
+        <li>Sensação "jogo sério" aumenta percepção de qualidade</li>
+        <li>Sem distrações — foco total no grid de letras</li>
+        <li>Funciona excepcionalmente bem no modo escuro do sistema</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+function showTab(n) {
+  document.querySelectorAll('.prototype-container').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab' + n).classList.add('active');
+  document.querySelectorAll('.tab-btn')[n-1].classList.add('active');
+}
+</script>
+
+</body>
+</html>

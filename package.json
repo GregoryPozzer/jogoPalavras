@@ -1,0 +1,19 @@
+{
+  "name": "lexo",
+  "version": "1.0.0",
+  "description": "LEXO — O jogo diário de adivinhação de palavras",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx -y serve . --listen 5500",
+    "dev": "npx -y serve . --listen 5500",
+    "build": "npx -y esbuild js/main.js --bundle --outfile=js/bundle.js --format=iife"
+  },
+  "keywords": [
+    "wordle",
+    "termo",
+    "lexo",
+    "jogo-de-palavras"
+  ],
+  "author": "",
+  "license": "MIT"
+}
